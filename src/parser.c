@@ -239,7 +239,7 @@ bool should_filter_packet(const packet_info_t* info, const char* filter) {
     char filter_lower[256];
     size_t i;
     for (i = 0; i < sizeof(filter_lower) - 1 && filter[i]; i++) {
-        filter_lower[i] = tolower(filter[i]);
+        filter_lower[i] = (char)tolower((unsigned char)filter[i]);
     }
     filter_lower[i] = '\0';
 
