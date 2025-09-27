@@ -1,17 +1,23 @@
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 #include <signal.h>
+#include <time.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h>
+#include <sys/ioctl.h>
+#include <linux/if.h>
+#include <net/if.h>
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
 #include <linux/if_packet.h>
-#include <net/if.h>
-#include <sys/ioctl.h>
-#include <time.h>
 
 #include "capture.h"
 #include "parser.h"
