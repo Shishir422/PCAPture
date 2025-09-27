@@ -1,16 +1,25 @@
-# Enhanced Makefile for PCAPture with security features
+# Enhanced Makefile for PCAPture with multiple build modes
 CC = gcc
 CPPFLAGS = -D_GNU_SOURCE -Iinclude
 
-# Security-hardened compiler flags
-CFLAGS = -Wall -Wextra -Werror -std=c99 -pedantic \
-         -Wformat=2 -Wformat-security -Wconversion -Wsign-conversion \
-         -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition \
-         -fstack-protector-strong -fPIE -D_FORTIFY_SOURCE=2
+# Development-friendly flags (default)
+DEV_CFLAGS = -Wall -Wextra -std=c99 -g -O1
+DEV_LDFLAGS = 
+DEV_LIBS = 
 
-# Security-hardened linker flags  
-LDFLAGS = -pie -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack
-LIBS = -lcap -lrt
+# Production security flags
+PROD_CFLAGS = -Wall -Wextra -Werror -std=c99 -pedantic \
+              -Wformat=2 -Wformat-security -Wconversion -Wsign-conversion \
+              -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition \
+              -fstack-protector-strong -fPIE -D_FORTIFY_SOURCE=2
+
+PROD_LDFLAGS = -pie -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack
+PROD_LIBS = -lcap -lrt
+
+# Default to development mode
+CFLAGS = $(DEV_CFLAGS)
+LDFLAGS = $(DEV_LDFLAGS)
+LIBS = $(DEV_LIBS)
 
 # Source files
 SRC = src/main.c src/capture.c src/parser.c src/utils.c
@@ -19,19 +28,26 @@ TARGET = pcapture
 
 # Build modes
 DEBUG_CFLAGS = -g -O0 -DDEBUG -fsanitize=address -fsanitize=undefined
-RELEASE_CFLAGS = -O2 -DNDEBUG
 
-# Default target
-all: $(TARGET)
+# Default target (development mode - easy compilation)
+all: dev
 
-# Debug build
-debug: CFLAGS += $(DEBUG_CFLAGS)
+# Development build (fast, minimal warnings)
+dev: $(TARGET)
+	@echo "Development build completed"
+
+# Debug build (with sanitizers)
+debug: CFLAGS = $(DEV_CFLAGS) $(DEBUG_CFLAGS)
 debug: LDFLAGS += -fsanitize=address -fsanitize=undefined
-debug: $(TARGET)
+debug: clean $(TARGET)
+	@echo "Debug build completed"
 
-# Release build
-release: CFLAGS += $(RELEASE_CFLAGS)
-release: $(TARGET)
+# Production build (full security hardening)
+production: CFLAGS = $(PROD_CFLAGS)
+production: LDFLAGS = $(PROD_LDFLAGS)
+production: LIBS = $(PROD_LIBS)
+production: clean $(TARGET)
+	@echo "Production build completed with full security hardening"
 
 # Main target
 $(TARGET): $(OBJ)
@@ -123,10 +139,12 @@ help:
 	@echo "PCAPture Build System"
 	@echo "====================="
 	@echo ""
-	@echo "Targets:"
-	@echo "  all          Build PCAPture (default)"
-	@echo "  debug        Build with debug symbols and sanitizers"
-	@echo "  release      Build optimized release version"
+	@echo "Build Modes:"
+	@echo "  make dev         Development build (fast, minimal warnings) [DEFAULT]"
+	@echo "  make debug       Debug build with sanitizers"
+	@echo "  make production  Full security hardening (strict warnings)"
+	@echo ""
+	@echo "Other Targets:"
 	@echo "  install      Install to /usr/local/bin (requires sudo)"
 	@echo "  uninstall    Remove from /usr/local/bin (requires sudo)"
 	@echo "  clean        Remove build artifacts"

@@ -8,9 +8,6 @@
 #include <grp.h>
 #include <errno.h>
 #include <time.h>
-#include <sys/prctl.h>
-#include <linux/capability.h>
-#include <sys/capability.h>
 #include "utils.h"
 
 static FILE* log_file_ptr = NULL;
