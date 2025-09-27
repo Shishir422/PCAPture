@@ -39,3 +39,7 @@ cachegrind.out.*
 /build/
 /bin/
 /dist/
+
+# Documentation files (generated/temporary)
+PCAPture_Complete_Documentation.md
+PCAPture_Documentation.html
