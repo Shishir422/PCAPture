@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <time.h>
 #include "utils.h"
+#include "capture.h"
 
 static FILE* log_file_ptr = NULL;
 
@@ -107,21 +108,6 @@ void log_message(const char* level, const char* format, ...) {
     
     fprintf(output, "\n");
     fflush(output);
-}
-
-// Signal handler for graceful shutdown
-volatile int should_stop = 0;
-
-void signal_handler(int signal) {
-    switch (signal) {
-        case SIGINT:
-        case SIGTERM:
-            log_message("INFO", "Received shutdown signal %d", signal);
-            should_stop = 1;
-            break;
-        default:
-            log_message("WARNING", "Received unexpected signal %d", signal);
-    }
 }
 
 void setup_signal_handlers(void) {
