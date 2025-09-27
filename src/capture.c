@@ -216,7 +216,7 @@ void print_capture_stats(const capture_stats_t* stats) {
     
     time_t now = time(NULL);
     double elapsed = difftime(now, stats->start_time);
-    double rate = elapsed > 0 ? stats->packets_captured / elapsed : 0;
+    double rate = elapsed > 0 ? (double)stats->packets_captured / elapsed : 0.0;
     
     printf("\n=== Capture Statistics ===\n");
     printf("Packets captured: %lu\n", stats->packets_captured);
