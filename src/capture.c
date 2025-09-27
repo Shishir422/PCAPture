@@ -1,8 +1,10 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <signal.h>
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <arpa/inet.h>
