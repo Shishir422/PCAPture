@@ -1,19 +1,28 @@
 # PCAPture
 
-A lightweight **packet sniffer** written in C using **libpcap/Npcap**.  
-Capture and analyze network traffic in real-time, with support for Ethernet, IP, TCP/UDP parsing.
+**PCAPture** is a lightweight packet sniffer written in **C** using **raw sockets** on Linux.  
+It captures live network traffic and parses Ethernet, IP, TCP, UDP, and ICMP headers, printing them in real-time.  
 
-## Features
-- Capture raw packets from any network interface
-- Parse Ethernet, IP, TCP, UDP, and ICMP headers
-- Apply basic filters (IP, port, protocol)
-- Save captured packets to `.pcap` files for later analysis
+Think of it as a hands-on, minimal **Wireshark‑lite**, built from scratch for learning and exploration of how packets really look at the byte level.
 
-## Requirements
-- **Linux:** libpcap-dev (`sudo apt install libpcap-dev`)  
-- **Windows:** Npcap SDK
+---
 
-## Build & Run (Linux)
-```bash
-gcc src/main.c -o pcapTURE -lpcap
-sudo ./pcapTURE
+## ✨ Features
+- Capture raw packets directly from the network interface  
+- Parse and display:  
+  - Ethernet headers (source/destination MAC, protocol)  
+  - IP headers (source/destination IP, protocol)  
+  - TCP/UDP headers (source/destination ports)  
+  - ICMP headers (type)  
+- Continuous capture loop until interrupted (`Ctrl+C`)  
+- Modular and extensible code structure (`main.c`, `capture.c`, `parser.c`)  
+
+---
+
+## 🛠️ Requirements
+- **Linux** (Kali, Ubuntu, Debian, Fedora, etc.)  
+- Root privileges (raw sockets require elevated rights)  
+- Development tools:
+  ```bash
+  sudo apt update
+  sudo apt install build-essential
