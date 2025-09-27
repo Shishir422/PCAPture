@@ -1,0 +1,16 @@
+# Line ending configurations
+* text=auto
+
+# Shell scripts should have Unix line endings
+*.sh text eol=lf
+
+# Windows batch files should have Windows line endings  
+*.bat text eol=crlf
+
+# Source code files
+*.c text
+*.h text
+*.md text
+
+# Makefile should have Unix line endings for compatibility
+Makefile text eol=lf
