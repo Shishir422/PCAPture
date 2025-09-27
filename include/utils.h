@@ -1,7 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#define _GNU_SOURCE
 #include <stddef.h>
 #include <stdbool.h>
 #include <sys/types.h>
