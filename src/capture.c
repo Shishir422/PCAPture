@@ -13,7 +13,6 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
-#include <linux/if.h>
 #include <net/if.h>
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
