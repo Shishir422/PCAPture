@@ -318,4 +318,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**⚡ PCAPture v2.0** - Secure, Fast, Reliable Network Analysis
+**⚡ PCAPture v2.0** - Secure, Fast, Reliable Network Analysis.
